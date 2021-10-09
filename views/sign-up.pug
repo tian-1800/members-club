@@ -1,0 +1,68 @@
+extends layout
+
+block content
+  h1= title
+  form(method="POST", action="")
+    .form-group
+      label(for="firstname") First name
+      input#firstname.form-control(
+        type="text",
+        name="firstname",
+        placeholder="First name",
+        required="true"
+      )
+    .form-group
+      label(for="lastname") Last name
+      input#lastname.form-control(
+        type="text",
+        name="lastname",
+        placeholder="Last name",
+        required="true"
+      )
+    .form-group
+      label(for="username") Username
+      input#username.form-control(
+        type="text",
+        name="username",
+        placeholder="Username",
+        required="true"
+      )
+    .form-group
+      label(for="password") Password
+      input#password.form-control(
+        type="password",
+        name="password",
+        required="true"
+      )
+    button.btn-submit(type="submit") Submit
+
+  if errors
+    ul
+      each error in errors
+        li= error.msg
+
+//- <!DOCTYPE html>
+//- <html lang="en">
+//-   <head>
+//-     <meta charset="UTF-8" />
+//-     <title></title>
+//-   </head>
+//-   <body>
+//-     <h1>Sign Up</h1>
+//-     <form action="" method="POST">
+//-       <label for="firstname">Firstname</label>
+//-       <input name="firstname" placeholder="firstname" type="text" />
+
+//-       <label for="lastname">Lastname</label>
+//-       <input name="lastname" placeholder="lastname" type="text" />
+
+//-       <label for="username">Username</label>
+//-       <input name="username" placeholder="username" type="text" />
+
+//-       <label for="password">Password</label>
+//-       <input name="password" type="password" />
+//-       <button>Sign Up</button>
+//-     </form>
+
+//-   </body>
+//- </html>

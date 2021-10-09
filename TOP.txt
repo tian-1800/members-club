@@ -1,0 +1,12 @@
+# Setting Express
+> express project-name --view=pug
+> npm install express-session express-validator bcryptjs async mongoose passport passport-local ejs
+
+
+
+# On package.json
+  "scripts": {
+      "start": "node ./bin/www",
+      "devstart": "nodemon ./bin/www",
+      "serverstart": "DEBUG=<Project Name>:* npm run devstart"
+    },

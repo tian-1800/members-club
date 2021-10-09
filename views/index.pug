@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  if user
+    h1 Welcome Back #{ user.username }
+    a(href="/log-out") LOG OUT
+  else
+    h1 Please log in
+    form(method="POST", action="/log-in")
+      .form-group
+        label(for="username") User name
+        input#username.form-control(
+          type="text",
+          name="username",
+          placeholder="User name",
+          required="true"
+        ) 
+      .form-group
+        label(for="password") Password
+        input#password.form-control(
+          type="password",
+          name="password",
+          required="true"
+        )
+
+      button.btn-submit(type="submit") Submit
