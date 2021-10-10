@@ -34,6 +34,13 @@ block content
         name="password",
         required="true"
       )
+    .form-group
+      label(for="confirm-password") Confirm Password
+      input#password.form-control(
+        type="password",
+        name="confirm-password",
+        required="true"
+      )
     button.btn-submit(type="submit") Submit
 
   if errors

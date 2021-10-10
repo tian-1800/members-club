@@ -2,7 +2,11 @@ extends layout
 
 block content
   if user
-    h1 Welcome Back #{ user.username }
+    h1 Welcome Back #{ user.name }
+    p Membership Status = #{ user.membership }
+    if (user.membership !== "member")
+      a(href="/sign-up-member") Upgrade membership
+    a(href="/new-message") Create New Message
     a(href="/log-out") LOG OUT
   else
     h1 Please log in

@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-// const async = require("async");
+const async = require("async");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
@@ -30,6 +30,14 @@ exports.sign_up_post = [
     .isLength({ min: 6 })
     .escape()
     .withMessage("Password must be at least six characters"),
+  body("confirm-password")
+    .escape()
+    .custom(async (confirmPassword, { req }) => {
+      const password = req.body.password;
+      if (password !== confirmPassword) {
+        throw new Error("Passwords must match");
+      }
+    }),
   body("username")
     .trim()
     .isLength({ min: 1 })
@@ -53,7 +61,7 @@ exports.sign_up_post = [
           lastname: req.body.lastname,
           username: req.body.username,
           password: hashedPassword,
-          membership: "unregistered",
+          membership: "user",
         });
         user.save((err) => {
           if (err) {
@@ -61,6 +69,41 @@ exports.sign_up_post = [
           }
           res.redirect("/");
         });
+      });
+    }
+  },
+];
+
+exports.sign_up_member_get = (req, res) => {
+  res.render("sign-up-member");
+};
+
+exports.sign_up_member_post = [
+  body("secret-code")
+    .trim()
+    .escape()
+    .custom(async (code) => {
+      const secretCode = "cats";
+      if (code !== secretCode) {
+        throw new Error("Wrong Secret Code");
+      }
+    }),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render("sign-up-member", {
+        errors: errors.array(),
+      });
+    } else {
+      // if err, do something
+      // otherwise, store hashedPassword in DB
+      const user = req.user;
+      user.membership = "member";
+      user.save((err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect("/");
       });
     }
   },
