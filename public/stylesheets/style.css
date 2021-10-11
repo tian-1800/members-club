@@ -27,6 +27,11 @@ a {
   display: flex;
   gap: 1rem;
 }
+@media (max-width: 800px) {
+  .header {
+    flex-direction: column;
+  }
+}
 
 .menu {
   display: flex;

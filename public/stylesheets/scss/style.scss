@@ -1,3 +1,12 @@
+$mobile: 800px;
+
+// Mixins
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
 @import "__global";
 @import "__header";
 @import "__message-list";

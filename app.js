@@ -9,11 +9,14 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 
+const helmet = require("helmet");
+const compression = require("compression");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const User = require("./models/user");
 
 const app = express();
+app.use(helmet());
 const mongoose = require("mongoose");
 const mongoDB = process.env.MONGODB_URI;
 
@@ -71,6 +74,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/users", usersRouter);
