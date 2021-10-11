@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  main
+    .generic-container
+      h1 Welcome, #{ user.name }!
+      p You are #{ user.membershipStatus }
+      p Your privileges are:
+      ul
+        each item in user.privileges
+          li= item
+      if (!user.membership)
+        hr
+        p To upgrade membership please enter the passcode below
+        form(method="POST", action="")
+          .form-group
+            label(for="secret-code") Enter The Secret Passcode:
+            input#secret-code.form-control(
+              type="text",
+              name="secret-code",
+              placeholder="Secret Code",
+              required="true"
+            )
+          button.btn-submit(type="submit") Submit
+          if errors
+            ul
+              each error in errors
+                li= error.msg
+
+          p Passcode is "cats" for member and "admin" for admin respectively, without the quotation marks
+      h4.generic-container__link
+        a(href="/") Back To Home

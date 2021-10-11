@@ -1,5 +1,5 @@
 const { body, validationResult } = require("express-validator");
-const async = require("async");
+// const async = require("async");
 const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
@@ -59,7 +59,7 @@ exports.sign_up_post = [
           lastname: req.body.lastname,
           username: req.body.username,
           password: hashedPassword,
-          membership: "user",
+          membership: false,
         });
         user.save((err) => {
           if (err) {
@@ -72,31 +72,34 @@ exports.sign_up_post = [
   },
 ];
 
-exports.sign_up_member_get = (req, res) => {
-  res.render("sign-up-member");
+exports.membership_get = (req, res) => {
+  res.render("membership", { user: req.user });
 };
 
-exports.sign_up_member_post = [
+exports.membership_post = [
   body("secret-code")
     .trim()
     .escape()
     .custom(async (code) => {
-      const secretCode = "cats";
-      if (code !== secretCode) {
+      const memberCode = "cats";
+      const adminCode = "admin";
+      if (code !== memberCode && code !== adminCode) {
         throw new Error("Wrong Secret Code");
       }
     }),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render("sign-up-member", {
+      res.render("membership", {
         errors: errors.array(),
+        user: req.user,
       });
     } else {
       // if err, do something
       // otherwise, store hashedPassword in DB
       const user = req.user;
-      user.membership = "member";
+      user.membership = true;
+      user.admin = req.body["secret-code"] === "admin" ? true : false;
       user.save((err) => {
         if (err) {
           return next(err);

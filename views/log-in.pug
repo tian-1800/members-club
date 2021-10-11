@@ -1,18 +1,22 @@
-form(method="POST", action="/log-in")
-  .form-group
-    label(for="username") User name:
-    input#username.form-control(
-      type="text",
-      name="username",
-      placeholder="User name",
-      required="true"
-    ) 
-  .form-group
-    label(for="password") Password:
-    input#password.form-control(
-      type="password",
-      name="password",
-      required="true"
-    )
+extends layout
 
-  button.btn-submit(type="submit") Submit
+block content
+  .generic-container
+    form(method="POST", action="/log-in")
+      .form-group
+        label(for="username") User name:
+        input#username.form-control(
+          type="text",
+          name="username",
+          placeholder="User name",
+          required="true"
+        ) 
+      .form-group
+        label(for="password") Password:
+        input#password.form-control(
+          type="password",
+          name="password",
+          required="true"
+        )
+
+      button.btn-submit(type="submit") Submit

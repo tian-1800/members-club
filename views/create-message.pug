@@ -2,7 +2,7 @@ extends layout
 
 block content
   if user
-    form(action="", method="post") 
+    form.generic-container(action="", method="post") 
       .form-group
         label(for="title") Message title
         input#title(type="text", name="title")

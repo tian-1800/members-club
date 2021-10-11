@@ -6,14 +6,14 @@ block content
       .header__club-name Petok-Petok Exclusive Club
       .header__user-login 
         if user
-          .header__user-menu #{ user.username }
-            ul.menu
-              li.menu__item
-                a(href="/new-message") Create Message
-              li.menu__item
-                a(href="/membership") Membership
-              li.menu__item
-                a(href="/log-out") Log Out
+          .header__user-menu.menu
+            span.menu__item
+              a(href="/new-message") Create Message
+            span.menu__item
+              a(href="/membership") Membership
+            span.menu__item
+              a(href="/log-out") Log Out
+            span.menu__username #{ user.username }
         else
           span.header__log-in 
             a(href="/log-in") Log In
@@ -21,12 +21,25 @@ block content
             a(href="/sign-up") Sign Up
   main
     .container 
+      p.container__notificaton= notification
       each message in message_list
         .container__item
           h2.container__item-title= message.title
           p.container__item-content= message.content
           hr
-          if (user && user.membership==="member")
-            p.container__item-footer Created by #{ user.name } at #{ message.timeStamp }
+          if (user && user.membership)
+            p.container__item-footer Created by #{ message.author.name } at #{ message.timeStampFormatted }
+            if (user.admin)
+              form(method="POST", action="/delete-message")
+                .form-group
+                  input(
+                    type="hidden",
+                    name="messageid",
+                    required="true",
+                    value=message.id
+                  )
+                  button.container__item-del(type="submit") Delete
+          else if (!user)
+            p.container__item-footer Log in to see the author or to post new message
           else
-            p.container__item-footer Log in to see the author and date
+            p.container__item-footer Upgrade membership to see the author and date

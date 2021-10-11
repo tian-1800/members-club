@@ -7,10 +7,13 @@ const { body, validationResult } = require("express-validator");
 const Message = require("../models/message");
 
 exports.home = (req, res, next) => {
-  Message.find().exec((err, list) => {
-    if (err) return next(err);
-    res.render("index", { message_list: list, user: req.user });
-  });
+  Message.find()
+    .populate("author")
+    .sort([["timeStamp", "descending"]])
+    .exec((err, list) => {
+      if (err) return next(err);
+      res.render("index", { message_list: list, user: req.user });
+    });
 };
 
 exports.create_message_get = (req, res) => {
@@ -49,3 +52,10 @@ exports.create_message_post = [
     }
   },
 ];
+
+exports.delete_message_post = (req, res, next) => {
+  Message.findByIdAndRemove(req.body.messageid, (err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+};
