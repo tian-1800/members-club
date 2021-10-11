@@ -1,30 +1,32 @@
 extends layout
 
 block content
-  if user
-    h1 Welcome Back #{ user.name }
-    p Membership Status = #{ user.membership }
-    if (user.membership !== "member")
-      a(href="/sign-up-member") Upgrade membership
-    a(href="/new-message") Create New Message
-    a(href="/log-out") LOG OUT
-  else
-    h1 Please log in
-    form(method="POST", action="/log-in")
-      .form-group
-        label(for="username") User name
-        input#username.form-control(
-          type="text",
-          name="username",
-          placeholder="User name",
-          required="true"
-        ) 
-      .form-group
-        label(for="password") Password
-        input#password.form-control(
-          type="password",
-          name="password",
-          required="true"
-        )
-
-      button.btn-submit(type="submit") Submit
+  header 
+    .header 
+      .header__club-name Petok-Petok Exclusive Club
+      .header__user-login 
+        if user
+          .header__user-menu #{ user.username }
+            ul.menu
+              li.menu__item
+                a(href="/new-message") Create Message
+              li.menu__item
+                a(href="/membership") Membership
+              li.menu__item
+                a(href="/log-out") Log Out
+        else
+          span.header__log-in 
+            a(href="/log-in") Log In
+          span.header__sign-up 
+            a(href="/sign-up") Sign Up
+  main
+    .container 
+      each message in message_list
+        .container__item
+          h2.container__item-title= message.title
+          p.container__item-content= message.content
+          hr
+          if (user && user.membership==="member")
+            p.container__item-footer Created by #{ user.name } at #{ message.timeStamp }
+          else
+            p.container__item-footer Log in to see the author and date

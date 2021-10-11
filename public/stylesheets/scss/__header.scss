@@ -1,0 +1,18 @@
+.header {
+  height: 4rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  background-color: #d96;
+  color: #000;
+
+  &__club-name {
+    font-size: 2rem;
+    flex-grow: 1;
+  }
+
+  &__user-login {
+    display: flex;
+    gap: 1rem;
+  }
+}

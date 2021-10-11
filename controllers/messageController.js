@@ -6,6 +6,13 @@ const { body, validationResult } = require("express-validator");
 // const User = require("../models/user");
 const Message = require("../models/message");
 
+exports.home = (req, res, next) => {
+  Message.find().exec((err, list) => {
+    if (err) return next(err);
+    res.render("index", { message_list: list, user: req.user });
+  });
+};
+
 exports.create_message_get = (req, res) => {
   res.render("create-message", { user: req.user });
 };

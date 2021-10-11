@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  if (user.membership === "member")
+  if user
     form(action="", method="post") 
       .form-group
         label(for="title") Message title

@@ -1,0 +1,18 @@
+.container {
+  padding: 4rem 1rem;
+
+  &__item {
+    font-size: 1rem;
+    max-width: 45rem;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-radius: 0.3125rem;
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.76);
+    margin: 0 auto;
+
+    &-footer {
+      font-size: 0.875rem;
+      font-style: italic;
+    }
+  }
+}
